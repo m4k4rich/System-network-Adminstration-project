@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: backend-service
+  name: backend-service
+spec:
+  type: NodePort
+  ports:
+    - port: 8000
+      nodePort: 30007
+  selector:
+    service: backend-deployment

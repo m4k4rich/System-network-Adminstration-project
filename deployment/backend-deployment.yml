@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: backend-deployment
+  name: backend-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      service: backend-deployment
+  template:
+    metadata:
+      labels:
+        service: backend-deployment
+    spec:
+      containers:
+        - name: backend-deployment
+          image: backend
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: DB_URL
+          resources:
+            limits:
+              cpu: 250m
+              memory: 256Mi
+            requests:
+              cpu: 125m
+              memory: 128Mi
+      restartPolicy: Always
